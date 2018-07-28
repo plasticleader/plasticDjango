@@ -1,0 +1,252 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}
+    TUACUERDO.COM
+{% endblock %}
+{% block header%}
+    <style type="text/css">
+        .card_one{
+            /*background-color: #ABC209;*/*/
+            border-radius:30px;
+            border-color: #e8e9ed;
+            /*border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px; */
+            /*font-style: "Liberation Sans";*/
+        }
+        .card_one_two{
+            /*background-color: #ABC209;*/
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            /*font-style: "Liberation Sans";*/
+        }
+        .card_two{
+            background-color: #e8e9ed;
+            border-radius: 15px;
+
+        }
+        .spanInternos{
+            display: inline-block;
+            width: 100px;
+            font-family: "Liberation Sans";
+            font-size: 0.8em;
+            /*margin-bottom: 10px;*/
+        }
+        /*.spanFinal{
+            width: 100%;
+            height:250px; 
+            font-family: "Liberation Sans";
+            font-size: 0.8em;
+            
+            
+        }*/
+        .aButton{
+            background-color: #ABC209;
+            border-top-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: #fff;
+        }
+        .card_abajo{
+            height: 30px;
+            background-color: #ABC209;
+            border-radius: 3px;
+            text-align: center;
+            color: #fff;
+            font-family: "Liberation Sans";
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<form id="form1" name="form1" method="post" action="" class="form-horizontal" role="form">
+<div class="container">
+    <header class="funnel-header"></header>
+    <div class="row funnel-container">
+         <div class="col-lg-12">
+             <div class="panel panel-success" style="border-color: #badc30;">
+                <div class="page-header">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <img src="../../../static/img/logos/logofalabella.svg" width="150px" height="150px" class="img-responsive" alt="Falabella">  
+                        </div>
+                        <div class="pull-right">
+                            <h6>Bienvenido <br> 
+                            {{persona_token.persona.nombre}}</h6> 
+                        </div>
+                    </div>
+                </div>
+                 <div class="panel-body">
+                    <div class="form-group">
+                        <!--div class="page-header">
+                           <h4 class="text-center">Resumen del acuerdo </h4>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                               <img class="center-block"  src="{% static "img/recibo_pago.png" %}" width="100" height="50">
+                            </div>
+                            <div class="container">                         
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                 <a class="btn btn-default btn-md center-block" type="button" name="btnbuscar" id='btnbuscar' href="{% url 'email' persona_token.token %}">Enviar Email</a>
+                                </div> 
+                            </div>                            
+                        </div-->
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h6> El valor de cada cuota y su fecha son las siguientes:</h6>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                       
+                            <div class="panel panel-success card_one">
+                                <table class="table  card_one">
+                                    <thead>
+                                        <tr class="active">
+                                            <th class="text-center"> # cuota</th>
+                                            <th class="text-center">Fecha de pago</th>
+                                            <th class="text-center">Monto a pagar (Pesos) {{acuerdo.tipo_moneda}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for cuota in cuotas %}
+                                        <tr class="success">
+                                            <td style="text-aling:center;">{{ forloop.counter }}</td>
+                                            <td style="text-aling:center;">{{cuota.fecha|date:"d M Y"}}</td>
+                                            <td style="text-aling:cent__er;">$ {{cuota.valor|floatformat:"0"|intcomma}} </td>
+                                        </tr>                                            
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <h6> Pagando este valor, cumple con <strong>todas </strong>las obligalllciones :</h6>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel panel-default card_two" st_yle="border-color: #badc30;" >
+                                <div class="card bg-light mb-3" style="margin-top: -40px;">
+                                    <div class="panel-body">
+                                        <div class="container">
+                                            <div class="card-header">
+                                                <br>
+                                                <b>Total a pagar:</b>
+                                                <div class="pull-right">
+                                                    {{total_pago | floatformat:"0" | intcomma}} Pesos
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div class="card-header">
+                                                <b>Su ahorro total es:</b>
+                                                <div class="pull-right">
+                                                    $ {{ahorro_total |floatformat:"0"|intcomma}} Pesos
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!--fieldset class="col-lg-12">        
+                            <div class="">
+                            <h5> Pagando este valor, cumple con <strong>todas </strong>las obligaciones :</h5>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="info">
+                                            <td><h4><strong>Total a pagar</strong></h4></td>
+                                            <td><h4>$ {{total_pago | floatformat:"0" | intcomma}} Pesos</h4></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+
+                            <h5> El valor de cada cuota y su fecha son las siguientes:</h5>                          
+                                <table class="table text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center"> # cuota</th>
+                                            <th class="text-center">Fecha de pago</th>
+                                            <th class="text-center">Monto a pagar (Pesos) {{acuerdo.tipo_moneda}}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for cuota in cuotas %}
+                                        <tr class="active">
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{cuota.fecha|date:"d M Y"}}</td>
+                                            <td>$ {{cuota.valor|floatformat:"0"|intcomma}} </td>
+                                        </tr>                                            
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            <h5> Su ahorro total es :</h5>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="success">
+                                            <td><h5><strong>$ {{ahorro_total |floatformat:"0"|intcomma}} Pesos </strong></h5></td>
+                                            <td><h5><strong>{{descuento_perc |floatformat:"2"|intcomma}}% </h5></strong></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>                            
+                            <h5> Sus obligaciones originales suman un total de:</h5>
+                           <div class="form-group">
+                                <div class="col-lg-12">
+                                <table class="table">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="danger">
+                                            <td><h5><strong>Total de Obligaciones</strong></h5></td>
+                                            <td><h5> $ {{obligaciones_total.valor |floatformat:"0"| intcomma}} Pesos</h5></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            
+
+                        </fieldset-->
+                        <div class="form-group">
+                            <div class="container">                         
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <a class="btn btn-pri_mary btn-md center-block" style="background-color:#badc30; border-radius: 8px;  color: #000;" type="button" name="btnbuscar" href="{% url 'descargar_acuerdo' persona_token.token %}" id='btnbuscar'>Descargar Recibo
+                                    </a>
+                                </div> 
+                            </div>                                                                  
+                            <!--div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                                <div class="panel">
+                             <a class="btn btn-defau_lt btn-md center-block" style="background-color:#badc30; border-radius: 8px;  color: #000; font-size:1em;" type="button" name="btnformtopago" id='btnformtopago' onclick="otros.cargaComprobante('Comprobante Falabella','{{persona_token.portafolio.cliente.empresa.nombre}}','{{persona_token.portafolio.cliente.nombre}}','{{persona_token.persona.nombre}}','{{persona_token.persona.token}}','verformatodepago')" >Descargar Recibo</a>
+                            </div-->
+                                <!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <a class="btn btn-primary btn-md center-block" type="button" name="btnbuscar" href="{% url 'email' persona_token.token %}" id='btnbuscar'>Enviar Email
+                                    </a>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <a class="btn btn-primary btn-md center-block" type="button" name="btnbuscar" href="{% url 'descargar_acuerdo' persona_token.token %}" id='btnbuscar'>Descargar Recibo
+                                    </a>
+                                </div--> 
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="funnel-footer"></footer>
+    <!--svg id="barcode"></svg-->
+</div>
+</form>
+
+{% endblock %}
+{% block footer %}
+
+{% endblock %}

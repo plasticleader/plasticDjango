@@ -1,0 +1,254 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load humanize %}
+{% block title %}
+    TUACUERDO.COM
+{% endblock %}
+{% block header%}
+    <style type="text/css">
+        .card_one{
+            /*background-color: #ABC209;*/*/
+            border-radius:30px;
+            border-color: #e8e9ed;
+            /*border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px; */
+            /*font-style: "Liberation Sans";*/
+        }
+        .card_one_two{
+            /*background-color: #ABC209;*/
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            /*font-style: "Liberation Sans";*/
+        }
+        .card_two{
+            background-color: #e8e9ed;
+            border-radius: 15px;
+
+        }
+        .spanInternos{
+            display: inline-block;
+            width: 100px;
+            font-family: "Liberation Sans";
+            font-size: 0.8em;
+            /*margin-bottom: 10px;*/
+        }
+        /*.spanFinal{
+            width: 100%;
+            height:250px; 
+            font-family: "Liberation Sans";
+            font-size: 0.8em;
+            
+            
+        }*/
+        .aButton{
+            background-color: #ABC209;
+            border-top-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: #fff;
+        }
+        .card_abajo{
+            height: 30px;
+            background-color: #ABC209;
+            border-radius: 3px;
+            text-align: center;
+            color: #fff;
+            font-family: "Liberation Sans";
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <form id="form1" name="form1" method="post" action="" class="form-horizontal" role="form">
+        <div class="container">
+            <div class="panel panel-success" style="border-color: #badc30;">
+                <div class="page-header">
+                    <div class="panel-body">
+                        <div class="pull-left">
+                            <img src="../../../static/img/logos/logofalabella.svg" width="150px" height="150px" class="img-responsive" alt="Falabella">  
+                        </div>
+                        <div class="pull-right">
+                            <h6>
+                            {{persona_token.persona.nombre}}</h6> 
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           <h6> Indiquenos cual es el valor que esta dispuesto a pagar del <strong>total</strong> de sus obligaciones :</h6>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <input type="hidden" name="contraoferta" id="contraoferta" value="0"></input>
+                            <input type="hidden" name="valor_propuesto_limpio" id="valor_propuesto_limpio" value=""></input>
+                            <input type="hidden" name="saldo_total" id="saldo_total" value={{ofertas_total.ts}}></input>
+                            <input type="hidden" name="saldo_capital" id="saldo_capital" value={{ofertas_total.tsc}}></input>
+                            <input type="hidden" name="saldo_int_corrientes" id="saldo_int_corrientes" value={{ofertas_total.tsic}}></input>
+                            <input type="hidden" name="saldo_int_mora" id="saldo_int_mora" value={{ofertas_total.tsim}}></input>
+                            <input type="hidden" name="primera_cuota" id="primera_cuota" value=0></input>
+                            <div class="panel panel-default card_two" st_yle="border-color: #badc30;" >
+                                <div class="card bg-light mb-3" style="margin-top: -40px;">
+                                    <div class="panel-body">
+                                        <div class="container">
+                                            <div class="card-header">
+                                                <br>
+                                                <div class="form-group  col-md-12">
+                                                    <label for="formGroupExampleInput">Valor propuesto:</label>
+                                                    <input type="number" class="form-control" autofocus="" onkeypress="return isNumberKey(event)" min="0"  name="valor_propuesto"  id="valor_propuesto" placeholder="Valor dispuesto a pagar">
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <label for="formGroupExampleInput2">A cuantas cuotas ?</label>
+                                                    <input type="text" class="form-control" onkeypress="return isNumberKey(event)"  name="numero_cuotas" id="numero_cuotas" min="0" max="100" placeholder="¿a cuantos meses?">
+                                                </div>
+                                                <div class="form-group  col-md-12">
+                                                    <a class="btn btn-prim_ary btn-md center-block" style="border-radius: 8px; background-color:#badc30; color: #000; font-size:1em;" type="submit" name="btnbuscar" id='id_calcular' value="Negociar">Calcular Valor Cuota</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                           
+                            <div class="panel panel-success card_one">
+                                <table class="table  card_one">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="success">
+                                            <thead>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="info_" style="background-color:#e2e6eb; color: #000;">
+                                                    <td><h5>Valor global de obligaciones</h5></td>
+                                                    <td><h5>$ {{saldo_total.valor| floatformat:"0" | intcomma}}</h5></td>
+                                                </tr>
+                                                <tr class="success">
+                                                    <td><h5><strong>Total a pagar propuesto:</strong></h5></td>
+                                                    
+                                                    <td><h5><label id="valor_propuesto_modificado">0</label></h5></td>                                             
+
+                                                </tr> 
+                                                <tr class="info_" style="background-color:#e2e6eb; color: #000;">
+                                                    <td><h5>Valor de cada cuota: </h5></td>
+                                                    <td><h5><label id="valor_cuota">0</label> </h5></td>
+                                                </tr>                                           
+                                            </tbody>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <a class="btn btn-success btn-md center-block" type="button" style="border-radius: 8px;  color: #fff; font-size:1em;" name="enviarpropuesta" id='enviarpropuesta' value="Negociar">Enviar propuesta</a>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block javascript %}
+    <script src= "{% static 'js/jquery.mask.min.js' %}"></script>
+    <script language="JavaScript" type="text/javascript">
+
+        $(function(){
+            // mascara de dinero
+            $('#valor_propuesto').mask('000.000.000.000.000', {reverse: true});
+            $('#valor_propuesto_modificado').mask('000.000.000.000.000', {reverse: true});
+            $('#valor_cuota').mask('000.000.000.000.000', {reverse: true});
+            saldo_total = $('#saldo_total').val();
+            saldo_capital = $('#saldo_capital').val();
+            saldo_int_corrientes = $('#saldo_int_corrientes').val();
+            saldo_int_mora = $('#saldo_int_mora').val();
+            dctointeres = $('#dctointeres').val();
+            dctocapital = $('#dctocapital').val();
+        })
+        var t = false
+
+        $('input').focus(function () {
+            var $this = $(this)
+            t = setInterval(
+
+            function () {
+                if (($this.val() < 1 ) && $this.val().length != 0) {
+                    if ($this.val() < 1) {
+                        $this.val(10000000)
+                    }
+                    $('p').fadeIn(1000, function () {
+                        $(this).fadeOut(500)
+                    })
+                }
+            }, 50)
+        })
+
+        $('input').blur(function () {
+            if (t != false) {
+                window.clearInterval(t)
+                t = false;
+            }
+        })
+        // validacion de las 
+        function isNumberKey(evt){
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }   
+
+        $("#id_calcular").bind('click',function(){
+          console.log('-------');
+          var valor_propuesto_sinmask = $('#valor_propuesto').val();
+         
+          $('#valor_propuesto_limpio').val(valor_propuesto_sinmask) 
+           
+           numero_cuotas = $('#numero_cuotas').val();
+           valor_propuesto = $('#valor_propuesto').val();
+           
+          
+           console.log("El valor negociado es: " + valor_propuesto);
+           // $('#valor_propuesto').val(valor_propuesto);
+           $('#primera_cuota').val(primera_cuota);
+           var form = $(this).closest("form");
+           $.ajax({
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(result)
+            {
+                console.log(result);
+                $('#valor_propuesto_modificado').text("$ " + result.valor_propuesto)
+                $('#valor_cuota').text("$ " + parseFloat(result.valor_cuota).toFixed(0))
+                
+            }
+        });
+        });
+
+        $("#enviarpropuesta").bind('click',function(){
+          console.log('-------');
+          var valor_propuesto_sinmask = $('#valor_propuesto').val();
+         
+          $('#valor_propuesto_limpio').val(valor_propuesto_sinmask) 
+           
+           numero_cuotas = $('#numero_cuotas').val();
+           valor_propuesto = $('#valor_propuesto').val();
+           contraofertar = $('#contraoferta').val('1');
+           
+          
+           console.log("El valor negociado es: " + valor_propuesto);
+           // $('#valor_propuesto').val(valor_propuesto);
+           $('#primera_cuota').val(primera_cuota);
+           var form = $(this).closest("form");
+           $.ajax({
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(result)
+            {
+               console.log(result);
+                window.location.href = result.redirect;
+            }
+        });
+        });
+    </script> 
+{% endblock %}  
+{% block footer %}
+
+{% endblock %}

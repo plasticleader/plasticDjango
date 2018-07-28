@@ -1,0 +1,108 @@
+{% extends "base/base.html" %}
+
+{% load staticfiles %}
+{% block title %}
+    Configuración Inicial De Crezcamos
+{% endblock %}
+
+{% block titulo %}
+	Configuración Inicial De Crezcamos
+{% endblock %}
+{% block header%}
+{% endblock %}
+
+{% block content %}
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Creando Campaña
+			                </h3>
+			            </div>
+			        </div>
+		        </div>
+		        <form class="m-form" method="post" enctype="multipart/form-data" id="formPostCrezcamos">
+					{% csrf_token %}
+					
+					<div class="m-portlet__body">	
+						<div class="m-form__section m-form__section--first">
+							<div class="form-group m-form__group row">
+								<label class="col-lg-3 col-form-label">Nombre Campaña</label>
+								<div class="col-lg-6">
+									{{form.archivos_nombre}}
+								</div>
+							</div>
+							<div class="form-group m-form__group row">
+								<label class="col-lg-3 col-form-label">Archivo:</label>
+								<div class="col-lg-6">
+									{{form.archivos_archivo}}
+								</div>
+							</div>
+							<div class="form-group m-form__group row">
+								<label class="col-lg-3 col-form-label">Observacines:</label>
+								<div class="col-lg-6">
+									{{form.archivos_observacion}}
+								</div>
+							</div>
+			            </div>
+		            </div>
+		            <div class="m-portlet__foot m-portlet__foot--fit">
+						<div class="m-form__actions m-form__actions">
+							<div class="row">
+								<div class="col-lg-6">
+									<button type="submit" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Guardar</button>
+								</div>
+								<div class="col-lg-6">
+									<a href="{% url 'crezcamos' %}" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Cancelar</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+	        </div>
+        </div>
+	</div>
+{% endblock %}
+{% block javascript %}
+	<script src="{% static 'js/clientes/index.js' %}"></script>
+	<script>
+		"{% if messages == 1 %}"
+			str_cargando.ejecutar('{{portafolio}}');
+		"{% endif %}"
+		$('#formPostCrezcamos').submit(function(){
+			var html = `
+			<div style="vertical-align:middle;font-size:2em;">
+				<div class="spinner">Procesando Preview
+			        <div class="m-spinner m-spinner--brand m-spinner--lg"></div>
+			        <div class="m-spinner m-spinner--primary m-spinner--lg"></div>
+			        <div class="m-spinner m-spinner--success m-spinner--lg"></div>       
+			        <div class="m-spinner m-spinner--info m-spinner--lg"></div>
+			        <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
+			        <div class="m-spinner m-spinner--danger m-spinner--lg"></div>
+		        </div>  
+		    </div>
+		`;
+		swal({
+		  html:html,
+		  showCloseButton: true,
+		  width: '80%',
+		  padding: '10em',
+		  showConfirmButton:false,
+		  showCloseButton:false,
+		  showConfirmButton:false,
+		  showCloseButton:false,
+		  allowOutsideClick:false,
+		  allowEscapeKey:false,
+		});
+		})
+	</script>
+			
+{% endblock %}	
+
+{% block footer %}
+{% endblock %}
+

@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Procesar  Archivos
+{% endblock %}
+
+{% block titulo %}
+	Procesar  Archivos
+{% endblock %}
+{% block header%}
+	<style>
+		/*#fondo{
+			position:absolute;
+			top:0px;
+			left:50px;
+			width:100%;
+			height:100%;
+			background-color: #000;
+		  	filter:alpha(opacity=60);
+		  	-moz-opacity: 0.6;
+		  	opacity: 0.6;
+		}*/
+		#fondo{
+		    display: flex;
+		    position: fixed;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    flex-direction: row;
+		    align-items: center;
+		    justify-content: center;
+		    padding: 10px;
+		    background-color: transparent;
+		    z-index: 1060;
+		    overflow-x: hidden;
+		    -webkit-overflow-scrolling: touch;
+		    background-color: rgba(0, 0, 0, 0.4);
+		}
+		/*.clase_cargando {
+			position:absolute;
+			top:0px;
+			left:0px;
+			width:100%;
+			height:100%;
+		}*/
+
+	</style>
+{% endblock %}
+
+{% block content %}
+	<a href="{% url 'procesararchivofinal' id_archivo %}" style="color:#fff;" id="btn_clickAutomatico"></a>
+	<div id="fondo">
+		<div style="vertical-align:middle;padding-top:150px;margin-left:450px;font-size:5em;">
+	        <div class="m-spinner m-spinner--brand m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--primary m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--success m-spinner--lg"></div>       
+	        <div class="m-spinner m-spinner--info m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--danger m-spinner--lg"></div>
+	        <div class="spinner">Procesando................  </div>
+	    </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+	<script src="{% static 'js/archivos/cargando.js' %}"></script>
+{% endblock %}	
+
+{% block footer %}
+{% endblock %}

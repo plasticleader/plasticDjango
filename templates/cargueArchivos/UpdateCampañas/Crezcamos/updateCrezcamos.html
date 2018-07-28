@@ -1,0 +1,437 @@
+{% extends "base/base.html" %}
+
+
+{% block title %}
+    Actualización De Crezcamos
+{% endblock %}
+
+{% block titulo %}
+	Actualización De Crezcamos
+{% endblock %}
+{% block header%}
+{% endblock %}
+
+{% block content %}
+
+	<div class="m-portlet" id="seccionIdPrincipal">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Listado Campañas
+			                </h3>
+			            </div>
+			        </div>
+					<div class="m-portlet__head-tools">
+			            <ul class="m-portlet__nav">
+			                <li class="m-portlet__nav-item">
+			                    <input  placeholder="Search"  class="search form-control m-input m-input--pill"  autofocus="" />
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin::Section-->
+			<div class="m-section">
+				<div class="m-section__content">
+					{% if campCrezcamos %}
+						<div class="table-responsive">
+							<table class="table table-bordered">  
+							    <thead>
+								        <th>Nombre Campaña</th>
+								        <th>Contrapropuesta</th>
+								        <th>Descuentos</th>
+								        <th>Fecha Creación</th>
+								        <th>Fecha Ultima Actualización</th>
+								        <th>Obligaciones</th>
+								        <th>Tokens</th>
+								        <th>Registros</th>
+								        <th>Opciones</th>
+							    </thead>
+							    <tbody class="list">
+							    	{% for empre in campCrezcamos %}
+						    			<tr>
+							    			<td class="name">{{empre.portafolio_nombre}}</td>
+							    			<td class="name">
+							    				{% if  empre.portafolio_contrapropuesta == "0" %}
+							    					<div id="divCheck_{{empre.id}}">
+									    				<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkout({{empre.id}}, {{empre.portafolio_contrapropuesta}},1)">
+															<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" style="width: 109px;">
+																<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: -56px;">
+																	<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53.9px;">Si</span>
+																	<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+																	<span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 53.9px;">No</span>
+																	<input data-switch="true" type="checkbox" data-on-color="success">
+																</div>
+															</div>
+														</span>
+													</div>
+												{% else %}
+													<div id="divCheck_{{empre.id}}">
+														<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkout({{empre.id}},{{empre.portafolio_contrapropuesta}},1)">
+															<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-on" style="width: 109px;">
+																<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: 0px;">
+																	<span class="bootstrap-switch-handle-on bootstrap-switch-success born" style="width: 53.9px;">Si</span>
+																	<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+																	<span class="bootstrap-switch-handle-off bootstrap-switch-default born" style="width: 53.9px;">No</span>
+																	<input data-switch="true" type="checkbox" data-on-color="success">
+																</div>
+															</div>
+														</span>
+													</div>
+												{% endif %}
+							    			</td>
+							    			<td class="name">
+							    				{% if  empre.portafolio_descuentos == "0" %}
+							    					<div id="divCheck_descu_{{empre.id}}">
+									    				<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkoutList({{empre.id}}, {{empre.portafolio_descuentos}},2)">
+															<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" style="width: 109px;">
+																<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: -56px;">
+																	<span class="bootstrap-switch-handle-on bootstrap-switch-success born" style="width: 53.9px;">Si</span>
+																	<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+																	<span class="bootstrap-switch-handle-off bootstrap-switch-default born" style="width: 53.9px;">No</span>
+																	<input data-switch="true" type="checkbox" data-on-color="success">
+																</div>
+															</div>
+														</span>
+													</div>
+												{% else %}
+													<div id="divCheck_descu_{{empre.id}}">
+														<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkoutList({{empre.id}},{{empre.portafolio_descuentos}},2)">
+															<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-on" style="width: 109px;">
+																<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: 0px;">
+																	<span class="bootstrap-switch-handle-on bootstrap-switch-success born" style="width: 53.9px;">Si</span>
+																	<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+																	<span class="bootstrap-switch-handle-off bootstrap-switch-default born" style="width: 53.9px;">No</span>
+																	<input data-switch="true" type="checkbox" data-on-color="success">
+																</div>
+															</div>
+														</span>
+													</div>
+												{% endif %}
+							    			</td>
+									        <td class="name">{{empre.portafolio_fechacreacion}}</td>
+									        <td class="name">{{empre.portafolio_fechaactualizacion}}</td>
+									        <td class="name">{{empre.portafolio_cantObligaciones}}</td>
+									        <td class="name">{{empre.portafolio_cantTokens}}</td>
+									        <td class="name">
+									        	<a href="{% url 'trazabilidad' empre.id %}"  class="btn m-btn--gradient-from-info m-btn--gradient-to-warning m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air born">
+									        		{{empre.portafolio_cantRegistros}}
+								        		</a>
+									        </td>
+							    			<td style="text-align:center;">
+							    				<a href="#!" onclick="listo({{empre.id}},'{{empre.portafolio_nombre}}')" data-toggle="modal" data-target="#m_modal_4" class="btn btn-outline-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+													<span>
+														<i class="la la-cloud-upload"></i>
+														<span>Actualizar</span>
+													</span>
+												</a>
+												<div class="modal fade" id="m_modal_4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+												  	<div class="modal-dialog modal-lg" role="document">
+												    	<div class="modal-content">
+												      		<div class="modal-header">
+												        		<h5 class="modal-title" id="exampleModalLabelTitle"></h5>
+														        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														          <span aria-hidden="true">×</span>
+														        </button>
+												      		</div>
+												     		<div class="modal-body">
+														        <form class="m-form" method="post" enctype="multipart/form-data" id="formUpdateCrezcamos">
+																	{% csrf_token %}
+																	
+																	<div class="m-portlet__body">	
+																		<div class="m-form__section m-form__section--first">
+																			<div class="form-group m-form__group row">
+																				<label class="col-lg-3 col-form-label">Archivo:</label>
+																				<div class="col-lg-6">
+																					{{form.archivos_archivo}}
+																				</div>
+																			</div>
+																			{{form.archivos_portafolio}}
+															            </div>
+														            </div>
+														            <div class="m-portlet__foot m-portlet__foot--fit">
+																		<div class="m-form__actions m-form__actions">
+																			<div class="row">
+																				<div class="col-lg-6">
+																					<button type="submit" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Guardar</button>
+																				</div>
+																				<div class="col-lg-6">
+																					<a href="#!" data-dismiss="modal" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Cancelar</a>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</form>
+												    		</div>
+										    			</div>
+										  			</div>
+												</div>
+												<a href="{% url 'tipocarguesdelete' empre.id %}" class="btn btn-outline-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+													<span>
+														<i class="la la-close"></i>
+														<span>Finalizar</span>
+													</span>
+												</a>
+							    				<!-- <div class="r_ow">
+							    					<div class="col-md-6">
+							    						
+							    					</div>
+							    				    <div class="col-md-6">
+							    						
+							    					</div>
+							    				</div> -->
+									        </td>
+						    			</tr>
+							      	{% endfor %}
+							    </tbody>
+						  	</table>
+						</div>
+					{% else %}
+						<div class="m-section__sub">
+							Create responsive tipos
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<!--end::Section-->
+		</div>
+	</div>
+	<div class="m-portlet" id="seccionIdSecundaria" style="display:none;">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Previa De Actualización Crezcamos
+			                </h3>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<div class="m-section">
+				<div class="m-section__content">
+					<div class="table-responsive">
+						
+						<table class="table table-bordered">
+						  	<thead id="id_thead">
+						  		<th>identificacion</th>
+								<th>tipo_identificacion_id</th>
+								<th>Nombre Apellidos</>
+								<th>Numero Credito</th>
+								<th>Capital Mora</th>
+								<th>Total Mora</th>
+								<th>Zona</th>
+								<th>Oficina</th>
+								<th>Area</th>
+								<th>Telefono1</th>
+								<th>Telefono2</th>
+								<!-- <th>Ciudad</th>
+								<th>Departamento</th>
+								<th>Estado</th> -->
+						  	</thead>
+						  	<tbody id="id_tbody">
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista2 %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+					  				</tr>
+						  		{% endfor %}
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+						  			</tr>
+						  		{% endfor %}
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista1 %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+						  			</tr>
+						  		{% endfor %}
+
+						  	</tbody>
+						</table>
+					</div>
+				</div>
+				<hr>
+				<div class="m-portlet__foot m-portlet__foot--fit">
+					<div class="m-form__actions m-form__actions">
+						<div class="row">
+							<div class="col-lg-6" id="btn_procesarFinal">
+								<a href="{% url 'procesandoUpdate' idFile %}" id="btnA_procesarFinal" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Procesar</a>
+							</div>
+							<div class="col-lg-6">
+								<a href="{% url 'updatecrezcamos' %}" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Cancelar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascript %}
+	<script>
+		$(function() {
+			"{% if vista == 1 %}"
+				$('#seccionIdPrincipal').hide();
+				$('#seccionIdSecundaria').show();
+		    "{% else %}"
+		    	$('#seccionIdSecundaria').hide();
+		       	$('#seccionIdPrincipal').show();
+			"{% endif %}"
+			listo = function(stra_list,stra_nombre) {
+				console.log(stra_list);
+				$('#id_archivos_portafolio').val(stra_list);
+				$('#exampleModalLabelTitle').html('Actualización '+stra_nombre+' ');
+			}
+
+			checkout = function(stra_list,stra_opc,stra_dato) {
+				var valor = 0;
+				if ( (stra_opc==1) && (stra_opc=='1') ) {
+					valor = 0;
+				}else{
+					valor = 1;
+				}
+				$.ajax({
+					dataType: 'json',
+					data: {id: stra_list,valor:valor,dato:stra_dato},
+				})
+				.done(function(data) {
+					if (data['tipo']=='ok') {
+						if ( (stra_opc==1) && (stra_opc=='1') ) {
+							$('#divCheck_'+stra_list).html('');
+							dato = `
+								<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkout(`+stra_list+`, `+valor+` ,`+stra_dato+`)">
+									<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" style="width: 109px;">
+										<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: -56px;">
+											<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53.9px;">Si</span>
+											<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+											<span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 53.9px;">No</span>
+											<input data-switch="true" type="checkbox" data-on-color="success">
+										</div>
+									</div>
+								</span>
+							`;
+							$('#divCheck_'+stra_list).html(dato)
+						}else{
+							$('#divCheck_'+stra_list).html('');
+							dato = `
+								<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkout(`+stra_list+`, `+valor+` ,`+stra_dato+`)">
+									<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-on" style="width: 109px;">
+										<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: 0px;">
+											<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53.9px;">Si</span>
+											<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+											<span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 53.9px;">No</span>
+											<input data-switch="true" type="checkbox" data-on-color="success">
+										</div>
+									</div>
+								</span>
+							`;
+							$('#divCheck_'+stra_list).html(dato)
+						}
+					}else{
+						swal('Algo va mal')
+					}
+				});
+			}
+
+			checkoutList = function(stra_list,stra_opc,stra_dato) {
+				var valor = 0;
+				if ( (stra_opc==1) && (stra_opc=='1') ) {
+					valor = 0;
+				}else{
+					valor = 1;
+				}
+				$.ajax({
+					dataType: 'json',
+					data: {id: stra_list,valor:valor,dato:stra_dato},
+				})
+				.done(function(data) {
+					if (data['tipo']=='ok') {
+						if ( (stra_opc==1) && (stra_opc=='1') ) {
+							$('#divCheck_descu_'+stra_list).html('');
+							dato = `
+								<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkoutList(`+stra_list+`, `+valor+` ,`+stra_dato+`)">
+									<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-off" style="width: 109px;">
+										<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: -56px;">
+											<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53.9px;">Si</span>
+											<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+											<span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 53.9px;">No</span>
+											<input data-switch="true" type="checkbox" data-on-color="success">
+										</div>
+									</div>
+								</span>
+							`;
+							$('#divCheck_descu_'+stra_list).html(dato)
+						}else{
+							$('#divCheck_descu_'+stra_list).html('');
+							dato = `
+								<span class="m-bootstrap-switch m-bootstrap-switch--pill" onclick="checkoutList(`+stra_list+`, `+valor+` ,`+stra_dato+`)">
+									<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-animate bootstrap-switch-on" style="width: 109px;">
+										<div class="bootstrap-switch-container" id="bootstrap-switch-container" style="width: 160px; margin-left: 0px;">
+											<span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 53.9px;">Si</span>
+											<span class="bootstrap-switch-label" style="width: 54px;">&nbsp;</span>
+											<span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 53.9px;">No</span>
+											<input data-switch="true" type="checkbox" data-on-color="success">
+										</div>
+									</div>
+								</span>
+							`;
+							$('#divCheck_descu_'+stra_list).html(dato);
+						}
+					}else{
+						swal('Algo va mal');
+					}
+				});
+			}
+			$('#formUpdateCrezcamos').submit(function(){
+				$('#m_modal_4').hide();
+				var html = `
+					<div style="vertical-align:middle;font-size:3em;">
+						<div class="spinner">Actualizando Preview.......
+					        <div class="m-spinner m-spinner--brand m-spinner--lg"></div>
+					        <div class="m-spinner m-spinner--primary m-spinner--lg"></div>
+					        <div class="m-spinner m-spinner--success m-spinner--lg"></div>       
+					        <div class="m-spinner m-spinner--info m-spinner--lg"></div>
+					        <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
+					        <div class="m-spinner m-spinner--danger m-spinner--lg"></div>
+				        </div>  
+				    </div>
+				`;
+				swal({
+				  html:html,
+				  showCloseButton: true,
+				  width: '80%',
+				  padding: '10em',
+				  showConfirmButton:false,
+				  showCloseButton:false,
+				  showConfirmButton:false,
+				  showCloseButton:false,
+				  allowOutsideClick:false,
+				  allowEscapeKey:false,
+				});
+			});
+
+			var options = {
+			  valueNames: [ 'name', 'born' ]
+			};
+
+			var userList = new List('seccionIdPrincipal', options);
+		});
+	</script>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

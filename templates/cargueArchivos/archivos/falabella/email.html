@@ -1,0 +1,96 @@
+{% extends "base/base.html" %}
+{% block title %}
+    TUACUERDO.COM
+{% endblock %}
+{% block header%}
+{% endblock %}
+{% block content %}
+<form id="form1" name="form1" method="post" data-validate-username-url="{% url 'enviar_email' %}">
+<div class="container">
+	<div class="row">
+    	 <div class="col-lg-12">
+        	 <div class="panel panel-primary" style="border-color: #badc30;">
+        	 	<div class="page-header">
+        	 	<h3 class="text-center">Envio a correo</h3>
+        	 	</div>
+				 <div class="panel-body">
+				 		<div class="form-group">
+				 			<h3 class="text-center" >Por favor, ingrese su correo electrónico ...</h3>
+				 		</div>
+                                    <div class="row form-group">
+                                        <h4 for="nombre" class="col-lg-2 control-label">E-Mail:</h4>
+                                        <div class="col-lg-10">
+                                        {% csrf_token %}
+                                          <input type="hidden" name="token" id="id_token" value="{{token}}" required />
+
+
+                                          <input type="email" class="form-control" name="sender" id="id_email" placeholder="miusuario@gmail.com" required />
+
+                                        <p style="display:none">Formato de correo usuario@dominio.com</p>
+									    </div>
+                                    </div>
+                                <div class="form-group">
+                                    <div class="col-lg-10 col-sm-12 col-xs-12">
+                                    	<a class="btn btn-success btn-md center-block" type="submit" name="btnbuscar" id='id_envio_email' value="Siguiente">Siguiente</a>
+                                    </div>
+                                </div>
+			 </div>
+		 </div>
+	</div>
+	</div>
+	<footer class="funnel-footer"></footer>
+</div>
+</form>
+{% endblock %}
+{% block javascript %}
+<script language="JavaScript" type="text/javascript">
+
+var t = false
+
+$('#id_email').click(function () {
+    var $this = $(this)
+    t = setInterval(
+
+    function () {
+        if ($this.val() == "" || $this.val() === undefined) {
+            $('p').fadeIn(1000, function () {
+                $(this).fadeOut(500)
+            })
+        }
+    }, 50)
+})
+
+$('#id_email').blur(function () {
+    if (t != false) {
+        window.clearInterval(t)
+        t = false;
+    }
+})
+ 
+
+
+$("#id_envio_email").bind('click',function(){
+   email = $('#id_email').val();
+   if (email == "") {
+    console.log("No existe");
+   }
+   var form = $(this).closest("form");
+
+
+   $.ajax({
+        url: form.attr("data-validate-username-url"),
+        data: form.serialize(),
+        dataType: 'json',
+        success: function (data) {
+          if (data.status) {
+            window.location.href = data.url;
+          }
+        }
+      });
+});
+  </script> 
+{% endblock %}  
+
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base/base.html" %}
+
+
+{% block title %}
+    Tipos De Archivos
+{% endblock %}
+
+{% block titulo %}
+	Tipos De Archivos
+{% endblock %}
+{% block header%}
+{% endblock %}
+
+{% block content %}
+
+	<div class="m-portlet">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Listado Tipos De Archivos
+			                </h3>
+			            </div>
+			        </div>
+			        <div class="m-portlet__head-tools">
+			            <ul class="m-portlet__nav">
+			                <li class="m-portlet__nav-item">
+			                    <a href="{% url 'tipoarchivoscrear' %}" class="btn btn-outline-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+			                        <span>
+			                            <i class="la la-plus"></i>
+			                            <span>Nuevo Tipo</span>
+			                        </span>
+			                    </a>
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
+				<!-- <div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Listado Tipos De Cargues
+					</h3>
+				</div> -->
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin::Section-->
+			<div class="m-section">
+				<div class="m-section__content">
+					{% if object_list %}
+						<div class="table-responsive">
+							<table class="table table-bordered">
+							    <thead>
+							      <tr>
+							        <th>Nombre Tipo Carge</th>
+							        <th>Nombre Tipo Archivo</th>
+							        <th>Estado</th>
+							        <th>Catidad De Columnas Obligatorias</th>
+							        <th>Nombre Columnas Obligatorias</th>
+							        <th>Opciones</th>
+							      </tr>
+							    </thead>
+							    <tbody>
+							    	{% for tipo in object_list %}
+								      	<tr>
+									        <td>{{ tipo.archivocarguearchivotipocargue  }}</td>
+									        <td>{{ tipo.archivocarguenombreasignacion }}</td>
+									        <td style="text-align:center;">
+									        	{% if tipo.archivocargueestado == True %}
+													<a href="#!" title="Desactivar {{ tipo.archivocarguenombreasignacion }}"  class="btn btn-outline-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--outline-2x m-btn--pill m-btn--air">
+														<i class="flaticon-like"></i>
+													</a>
+												{% else %}
+													<a href="#!" title="Activar {{ tipo.archivocarguenombreasignacion }}"  class="btn btn-outline-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--outline-2x m-btn--pill m-btn--air">
+														<i class="flaticon-cancel"></i>
+													</a>
+									        	{% endif %}
+									        </td>
+									        <td style="text-align:center;">{{ tipo.archivocarguecantidadcolumnasObligatorias }}</td>
+									        <td>{{ tipo.archivocarguenomcolumnas }}</td>
+									        <td style="text-align:center;">
+										        <a href="{% url 'tipocargueseditar' tipo.id %}" class="btn btn-outline-accent m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+													<span>
+														<i class="la la-pencil"></i>
+														<span>Editar</span>
+													</span>
+												</a>
+												 <a href="{% url 'tipocarguesdelete' tipo.id %}" class="btn btn-outline-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+													<span>
+														<i class="la la-close"></i>
+														<span>Eliminar</span>
+													</span>
+												</a>
+									        </td>
+								      	</tr>
+							      	{% endfor %}
+							    </tbody>
+						  	</table>
+						</div>
+					{% else %}
+						<div class="m-section__sub">
+							Create responsive tipos
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<!--end::Section-->
+		</div>
+		<!--end::Form-->
+	</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

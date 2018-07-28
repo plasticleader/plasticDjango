@@ -1,0 +1,230 @@
+{% extends "base/base.html" %}
+
+
+{% block title %}
+    Configuración Inicial De Falabella
+{% endblock %}
+
+{% block titulo %}
+	Configuración Inicial De Falabella
+{% endblock %}
+{% block header%}
+{% endblock %}
+
+{% block content %}
+
+	<div class="m-portlet" id="seccionIdPrincipal">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Listado Campañas
+			                </h3>
+			            </div>
+			        </div>
+			        <div class="m-portlet__head-tools">
+			            <ul class="m-portlet__nav">
+			                <li class="m-portlet__nav-item">
+			                    <a href="{% url 'falabellaCampanacrear' %}" class="btn btn-outline-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air">
+			                        <span>
+			                            <i class="la la-plus"></i>
+			                            <span>Nueva Campaña</span>
+			                        </span>
+			                    </a>
+			                </li>
+			            </ul>
+			        </div>
+			    </div>
+				<!-- <div class="m-portlet__head-title">
+					<h3 class="m-portlet__head-text">
+						Listado Tipos De Cargues
+					</h3>
+				</div> -->
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin::Section-->
+			<div class="m-section">
+				<div class="m-section__content">
+					{% if campFalabella %}
+						<div class="table-responsive">
+							<table class="table table-bordered">  
+							    <thead>
+								        <th>Nombre Campaña</th>
+								        <th>Archivo</th>
+								        <th>Fecha Creación</th>
+								        <th>Estado</th>
+								        <th>Observaciones</th>
+								        <th>Opciones</th>
+							    </thead>
+							    <tbody>
+							    	{% for empre in campFalabella %}
+							    		<tr>
+							    			<td>{{empre.archivos_nombre}}</td>
+							    			<td style="text-align:center;">
+							    				<a href="{% url 'descargaArchivo' empre.id %}" style="color:#fff;" title="Descargar {{ empre.archivos_nombre }} sin procesar"  class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air">
+														<i class="flaticon-download"></i>
+												</a>
+							    			</td>
+									        <td>{{empre.archivos_fechacreacion}}</td>
+							    			<td style="text-align:center;">
+									        	{% if empre.archivos_estado == True %}
+													<a style="cursor: not-allowed;color:#fff;" title="Archivo {{ empre.archivos_nombre }} procesado"  class="btn btn-success m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air">
+														<i class="flaticon-like"></i>
+													</a>
+												{% else %}
+													<a style="cursor: not-allowed;color:#fff;" title="Archivo {{ empre.archivos_nombre }} sin procesar"  class="btn btn-danger m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill m-btn--air">
+														<i class="flaticon-cancel"></i>
+													</a>
+									        	{% endif %}
+									        </td>
+							    			<td>{{empre.archivos_observacion}}</td>
+							    			<td><a href="#!">Editar</a></td>
+							    		</tr>
+							      	{% endfor %}
+							    </tbody>
+						  	</table>
+						</div>
+					{% else %}
+						<div class="m-section__sub">
+							Create responsive tipos
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<!--end::Section-->
+		</div>
+	</div>
+	<div class="m-portlet" id="seccionIdSecundaria" style="display:none;">
+		<div class="m-portlet__head">
+			<div class="m-portlet__head-caption">
+				<div class="m-portlet__head">
+			        <div class="m-portlet__head-caption">
+			            <div class="m-portlet__head-title">
+			                <h3 class="m-portlet__head-text">
+			                    Previa De Archivo Ejecutado
+			                </h3>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+		<div class="m-portlet__body">
+			<!--begin::Section-->
+			<div class="m-section">
+				<div class="m-section__content">
+					<div class="table-responsive">
+						
+						<table class="table table-bordered">
+						  	<thead id="id_thead">
+						  		<th>persona_identificacion</th>
+								<th>persona_nombre</th>
+								<th>persona_tipoidentificacion</th>
+								<th>fecha_apertura</th>
+								<th>fechaasigna</th>
+								<th>saldo_total</th>
+								<th>cupo</th>
+								<th>dias_mora</th>
+								<th>Rango</th>
+								<th>habito_pago</th>
+								<th>cuenta</th>
+								<th>TlfCelular</th>
+								<th>teldom1</th>
+								<th>TelefCom1</th>
+								<th>Calle_Corresp</th>
+								<th>Depto_Correspondencia</th>
+								<th>Ciudad_Correspondencia</th>
+								<th>barrio</th>
+								<th>Calle_Com</th>
+								<th>Depto_Com</th>
+								<th>Ciudad_Com</th>
+								<th>Mail</th>
+						  	</thead>
+						  	<tbody id="id_tbody">
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista2 %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+					  				</tr>
+						  		{% endfor %}
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+						  			</tr>
+						  		{% endfor %}
+						  		{% for lis in lista %}
+						  			<tr>
+							  			{% for li in lis.lista1 %}
+							  				<td>{{li}}</td>
+						  				{% endfor %}
+						  			</tr>
+						  		{% endfor %}
+
+						  	</tbody>
+						</table>
+					</div>
+				</div>
+				<hr>
+				<div class="m-portlet__foot m-portlet__foot--fit">
+					<div class="m-form__actions m-form__actions">
+						<div class="row">
+							<div class="col-lg-6" id="btn_procesarFinal">
+								<a href="{% url 'procesararchivo' idAsiganacion %}" id="btnA_procesarFinal" class="btn btn-success m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Procesar</a>
+							</div>
+							<div class="col-lg-6">
+								<a href="{% url 'falabella' %}" class="btn btn-danger m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air btn-block">Cancelar</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascript %}
+	<script>
+		$(function() {
+			"{% if vista == 1 %}"
+				$('#seccionIdPrincipal').hide();
+				$('#seccionIdSecundaria').show();
+		       	console.log('{{valores}}');
+		       	var tmp = '{{valores}}'
+		       	var text = tmp.replace(/&#39;/g, '');
+		       	var text = tmp.replace(/Pandas/g, '');
+		       	var text = tmp.replace(/&#39;/g, '');
+		       	var text = tmp.replace(/()/g, '');
+		       	console.log(text);
+		       	var myObj = JSON.parse(text);
+		       	console.log(myObj);
+		       	$('#id_tbody').append('<tr>')
+		       	$.each(myObj, function(index, val) {
+		       		console.log(val);
+		       		$.each(val, function(inde, va) {
+		       			if ((va=='1') || (va==1)) {
+			       			va = 'CC';
+			       		}else {
+			       			va = va;
+			       		}
+		       			$('#id_tbody').append('<td>'+va+'</td>')
+       				});
+       				$('#id_tbody').append('</tr>')
+       				$('#id_tbody').append('<tr>')
+		       	});
+		    "{% else %}"
+		    	$('#seccionIdSecundaria').hide('slow/400/fast', function() {
+		       		$('#seccionIdPrincipal').show();
+		       	});
+			"{% endif %}"
+		})
+	</script>
+{% endblock %}
+
+
+
+{% block footer %}
+{% endblock %}

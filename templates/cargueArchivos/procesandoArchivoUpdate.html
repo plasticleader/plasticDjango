@@ -1,0 +1,52 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Procesar  Archivos
+{% endblock %}
+
+{% block titulo %}
+	Procesar  Archivos
+{% endblock %}
+{% block header%}
+	<style>
+		#fondo{
+		    display: flex;
+		    position: fixed;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    flex-direction: row;
+		    align-items: center;
+		    justify-content: center;
+		    padding: 10px;
+		    background-color: transparent;
+		    z-index: 1060;
+		    overflow-x: hidden;
+		    -webkit-overflow-scrolling: touch;
+		    background-color: rgba(0, 0, 0, 0.4);
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+	<a href="{% url 'procesandoUpdateFinal' id_archivo %}" style="color:#fff;" id="btn_clickAutomaticoUpdate"></a>
+	<div id="fondo">
+		<div style="vertical-align:middle;padding-top:150px;margin-left:450px;font-size:4em;">
+	        <div class="m-spinner m-spinner--brand m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--primary m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--success m-spinner--lg"></div>       
+	        <div class="m-spinner m-spinner--info m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--warning m-spinner--lg"></div>
+	        <div class="m-spinner m-spinner--danger m-spinner--lg"></div>
+	        <div class="spinner">Actualizando................  </div>
+	    </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+	<script src="{% static 'js/archivos/cargandoUpdate.js' %}"></script>
+{% endblock %}	
+
+{% block footer %}
+{% endblock %}

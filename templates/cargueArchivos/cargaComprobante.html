@@ -1,0 +1,67 @@
+<!-- Jumbotron -->
+<div class="jumbotron">
+  <h3 class="text-center">Click sobre la imagen para subir su comprobante.</h3>
+</div>
+<form  role="form"  enctype="multipart/form-data" action="{% url 'cargaComprobante' token %}" method="POST" id="upload-image-form"> 
+  {% csrf_token %}
+  {{ form.as_p }}
+  <hr>
+  <button type="submit" id="btnEnviarComprobante" class="btn btn-default btn-block disabled">Enviar Comprobante</button>
+</form>
+
+<script>
+	var modified;
+	$(function() {		
+		$('#id_comprobante').hide();
+		$('label').hide();
+		$('p').append(
+			`	<div style="text-align:center;" id="divImg" >
+					<label for="FileInput">
+					    <img id="imgUpload" width="55%" class="pulse" src="http://tuacuerdo.com/static/img/uploadComprobantes.png" style="cursor:pointer" onmouseover="this.src='http://tuacuerdo.com/static/img/uploadComprobantes.png'" onmouseout="this.src='http://tuacuerdo.com/static/img/uploadComprobantes.png'" alt="Injaz Msila" style="float:right;margin:7px" />
+					</label>
+				</div>
+			`
+		);
+		$("#imgUpload").click(function () {
+		    $("#id_comprobante").trigger('click');
+		});
+	});
+
+	$("#id_comprobante").change(function () {   
+		modified = true;  
+		validarCampos()
+	}); 
+
+	function validarCampos() {
+  		if (modified) {  
+  			$('#btnEnviarComprobante').attr('disabled', false);
+  			$('#btnEnviarComprobante').removeClass('btn btn-default btn-block disabled');
+  			$('#btnEnviarComprobante').addClass('btn btn-success btn-block');
+  			$('#imgUpload').removeClass('pulse');
+		}
+	}
+</script>
+
+<style>
+	
+    @keyframes pulse_animation {
+	    0% { transform: scale(1); }
+	    30% { transform: scale(1); }
+	    40% { transform: scale(1.08); }
+	    50% { transform: scale(1); }
+	    60% { transform: scale(1); }
+	    70% { transform: scale(1.05); }
+	    80% { transform: scale(1); }
+	    100% { transform: scale(1); }
+	}
+
+	.pulse {
+	    animation-name: pulse_animation;
+	    animation-duration: 2000ms;
+	    transform-origin:100% 100%;
+	    animation-iteration-count: infinite;
+	    animation-timing-function: linear;
+	}
+
+</style>
+
